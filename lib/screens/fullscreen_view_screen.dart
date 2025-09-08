@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import '../services/message_service.dart';
+import '../widgets/floating_message_card.dart';
+
+class FullscreenViewScreen extends StatefulWidget {
+  final String title;
+  final String? backgroundImagePath;
+  final Uint8List? backgroundImageBytes;
+
+  const FullscreenViewScreen({
+    super.key,
+    required this.title,
+    this.backgroundImagePath,
+    this.backgroundImageBytes,
+  });
+
+  @override
+  State<FullscreenViewScreen> createState() => _FullscreenViewScreenState();
+}
+
+class _FullscreenViewScreenState extends State<FullscreenViewScreen>
+    with TickerProviderStateMixin {
+  List<Widget> _floatingCards = [];
+  late AnimationController _backgroundController;
+  late Animation<double> _backgroundAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _backgroundController = AnimationController(
+      duration: const Duration(seconds: 20),
+      vsync: this,
+    );
+
+    _backgroundAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _backgroundController,
+      curve: Curves.linear,
+    ));
+
+    _backgroundController.repeat();
+    _startFloatingAnimation();
+  }
+
+  @override
+  void dispose() {
+    _backgroundController.dispose();
+    super.dispose();
+  }
+
+  void _startFloatingAnimation() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _createFloatingCards();
+    });
+  }
+
+  void _createFloatingCards() {
+    final messageService = Provider.of<MessageService>(context, listen: false);
+    final messages = messageService.messages;
+    final screenSize = MediaQuery.of(context).size;
+
+    setState(() {
+      _floatingCards = messages.asMap().entries.map((entry) {
+        final index = entry.key;
+        final message = entry.value;
+        
+        return FloatingMessageCard(
+          message: message,
+          index: index,
+          screenSize: screenSize,
+          onTap: () {
+            // 全画面表示ではポップアップは表示しない
+          },
+        );
+      }).toList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    
+    return Scaffold(
+      backgroundColor: Colors.green, // グリーンバック
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.green, // グリーンバック
+          image: widget.backgroundImagePath != null
+              ? DecorationImage(
+                  image: kIsWeb && widget.backgroundImageBytes != null
+                      ? MemoryImage(widget.backgroundImageBytes!)
+                      : FileImage(File(widget.backgroundImagePath!)),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.green.withOpacity(0.3), // グリーンバックに合わせる
+                    BlendMode.multiply,
+                  ),
+                )
+              : null,
+        ),
+        child: Stack(
+          children: [
+            // 浮遊メッセージカード（ループ設定）
+            ..._floatingCards,
+          ],
+        ),
+      ),
+    );
+  }
+}
