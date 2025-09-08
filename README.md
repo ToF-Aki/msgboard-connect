@@ -21,4 +21,4 @@ Vercelでデプロイされています。
 ## 運用URL
 - 管理画面: `/admin`
 - ユーザー投稿: `/post`
-- ユーザー閲覧: `/user-view`
+- ユーザー閲覧: `/user-view`# Trigger workflow
