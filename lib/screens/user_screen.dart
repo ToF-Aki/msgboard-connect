@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 import '../services/message_service.dart';
 import '../widgets/floating_message_card.dart';
-import '../widgets/message_card.dart';
 import 'post_message_screen.dart';
 
 class UserScreen extends StatefulWidget {

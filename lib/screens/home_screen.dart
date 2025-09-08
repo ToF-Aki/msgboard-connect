@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/message_service.dart';
-import '../models/message.dart';
 import '../widgets/message_card.dart';
 import '../widgets/message_popup.dart';
 import 'post_message_screen.dart';

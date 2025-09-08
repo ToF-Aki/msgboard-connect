@@ -17,8 +17,7 @@ class _AnimatedViewScreenState extends State<AnimatedViewScreen>
     with TickerProviderStateMixin {
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
-  int _currentMessageIndex = 0;
-  List<Widget> _animatedCards = [];
+  final List<Widget> _animatedCards = [];
 
   @override
   void initState() {
@@ -103,9 +102,6 @@ class _AnimatedViewScreenState extends State<AnimatedViewScreen>
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              setState(() {
-                _currentMessageIndex = 0;
-              });
               _startMessageAnimation();
             },
             tooltip: 'アニメーション再開',

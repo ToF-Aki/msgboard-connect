@@ -22,36 +22,13 @@ class FullscreenViewScreen extends StatefulWidget {
   State<FullscreenViewScreen> createState() => _FullscreenViewScreenState();
 }
 
-class _FullscreenViewScreenState extends State<FullscreenViewScreen>
-    with TickerProviderStateMixin {
+class _FullscreenViewScreenState extends State<FullscreenViewScreen> {
   List<Widget> _floatingCards = [];
-  late AnimationController _backgroundController;
-  late Animation<double> _backgroundAnimation;
 
   @override
   void initState() {
     super.initState();
-    _backgroundController = AnimationController(
-      duration: const Duration(seconds: 20),
-      vsync: this,
-    );
-
-    _backgroundAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _backgroundController,
-      curve: Curves.linear,
-    ));
-
-    _backgroundController.repeat();
     _startFloatingAnimation();
-  }
-
-  @override
-  void dispose() {
-    _backgroundController.dispose();
-    super.dispose();
   }
 
   void _startFloatingAnimation() {
@@ -84,7 +61,6 @@ class _FullscreenViewScreenState extends State<FullscreenViewScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     
     return Scaffold(
       backgroundColor: Colors.green, // グリーンバック

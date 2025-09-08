@@ -28,9 +28,7 @@ class _FloatingMessageCardState extends State<FloatingMessageCard>
   late Animation<double> _scaleAnimation;
   
   late double _startX;
-  late double _startY;
   late double _endX;
-  late double _endY;
   late double _scale;
 
   @override
@@ -41,12 +39,7 @@ class _FloatingMessageCardState extends State<FloatingMessageCard>
     final random = math.Random(widget.index);
     _startX = widget.screenSize.width + 200; // より右側から開始
     
-    // Y座標をより広く分散させる（画面の60%の範囲で分散）
-    final centerY = widget.screenSize.height * 0.4;
-    final yVariation = widget.screenSize.height * 0.6; // 画面の60%の変動範囲
-    _startY = centerY + (random.nextDouble() - 0.5) * yVariation;
     _endX = -300; // より左側で終了
-    _endY = centerY + (random.nextDouble() - 0.5) * yVariation;
     
     // スケールを固定して安定させる
     _scale = 1.0; // 固定サイズ

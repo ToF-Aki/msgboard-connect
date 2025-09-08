@@ -21,7 +21,7 @@ class _FloatingViewScreenState extends State<FloatingViewScreen>
     with TickerProviderStateMixin {
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
-  List<Widget> _floatingCards = [];
+  final List<Widget> _floatingCards = [];
   String? _backgroundImagePath;
   Uint8List? _backgroundImageBytes;
   bool _isImagePickerOpen = false;
