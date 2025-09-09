@@ -62,8 +62,8 @@ class _UserScreenState extends State<UserScreen> {
                 ),
                 child: Stack(
                   children: [
-                    // 浮遊アニメーション
-                    ...messageService.messages.asMap().entries.map((entry) {
+                    // 浮遊アニメーション（最大8個まで表示してパフォーマンスを向上）
+                    ...messageService.messages.take(8).toList().asMap().entries.map((entry) {
                       final index = entry.key;
                       final message = entry.value;
                       return FloatingMessageCard(

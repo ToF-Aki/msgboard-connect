@@ -45,7 +45,7 @@ class _FloatingMessageCardState extends State<FloatingMessageCard>
     _scale = 1.0; // 固定サイズ
 
     _floatController = AnimationController(
-      duration: Duration(seconds: 60 + random.nextInt(10)), // 60-70秒（よりゆっくり）
+      duration: Duration(seconds: 30 + random.nextInt(10)), // 30-40秒（軽量化）
       vsync: this,
     );
 

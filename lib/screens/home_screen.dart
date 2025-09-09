@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
             },
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: messages.length,
+              itemCount: messages.length > 50 ? 50 : messages.length, // 最大50個まで表示
               itemBuilder: (context, index) {
                 final message = messages[index];
                 return MessageCard(
