@@ -151,35 +151,56 @@ class _UserScreenState extends State<UserScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const PostMessageScreen(),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // 管理者アクセス用の隠しボタン（長押しでアクセス）
+          GestureDetector(
+            onLongPress: () {
+              Navigator.pushNamed(context, '/admin');
+            },
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
-          );
-          
-          // 投稿完了後、説明を再表示
-          if (result == true) {
-            setState(() {
-              _showInstructions = true;
-            });
-            // 3秒後に再び非表示
-            Future.delayed(const Duration(seconds: 3), () {
-              if (mounted) {
+          ),
+          const SizedBox(height: 16),
+          // 投稿ボタン
+          FloatingActionButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PostMessageScreen(),
+                ),
+              );
+              
+              // 投稿完了後、説明を再表示
+              if (result == true) {
                 setState(() {
-                  _showInstructions = false;
+                  _showInstructions = true;
+                });
+                // 3秒後に再び非表示
+                Future.delayed(const Duration(seconds: 3), () {
+                  if (mounted) {
+                    setState(() {
+                      _showInstructions = false;
+                    });
+                  }
                 });
               }
-            });
-          }
-        },
-        backgroundColor: const Color(0xFF1976D2),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+            },
+            backgroundColor: const Color(0xFF1976D2),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

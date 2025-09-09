@@ -46,12 +46,13 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const HomeScreen(),
+        home: const UserScreen(), // デフォルトでユーザー画面に遷移
         routes: {
           '/admin': (context) => const AdminScreen(),
           '/user-view': (context) => const UserViewScreen(),
           '/user': (context) => const UserScreen(),
           '/post': (context) => const PostMessageScreen(),
+          '/home': (context) => const HomeScreen(), // 管理者用ホーム画面
         },
         debugShowCheckedModeBanner: false,
       ),

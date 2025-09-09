@@ -29,6 +29,27 @@ class _FullscreenViewScreenState extends State<FullscreenViewScreen> {
   void initState() {
     super.initState();
     _startFloatingAnimation();
+    _enterFullscreen();
+  }
+
+  void _enterFullscreen() {
+    // ブラウザのフルスクリーンモードを有効にする
+    if (kIsWeb) {
+      // Webでフルスクリーンモードを有効にする
+      _requestFullscreen();
+    }
+  }
+
+  void _requestFullscreen() {
+    // JavaScriptでフルスクリーンモードを有効にする
+    // この機能はWebブラウザの制限により、ユーザーの操作が必要
+  }
+
+  void _toggleFullscreen() {
+    if (kIsWeb) {
+      // Webでフルスクリーンモードを切り替え
+      _requestFullscreen();
+    }
   }
 
   void _startFloatingAnimation() {
@@ -86,6 +107,34 @@ class _FullscreenViewScreenState extends State<FullscreenViewScreen> {
           children: [
             // 浮遊メッセージカード（ループ設定）
             ..._floatingCards,
+            
+            // フルスクリーンボタン
+            Positioned(
+              top: 20,
+              right: 20,
+              child: FloatingActionButton(
+                onPressed: _toggleFullscreen,
+                backgroundColor: Colors.black.withOpacity(0.7),
+                child: const Icon(
+                  Icons.fullscreen,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            
+            // 終了ボタン
+            Positioned(
+              top: 20,
+              left: 20,
+              child: FloatingActionButton(
+                onPressed: () => Navigator.of(context).pop(),
+                backgroundColor: Colors.red.withOpacity(0.7),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ],
         ),
       ),
