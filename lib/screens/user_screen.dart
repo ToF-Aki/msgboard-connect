@@ -19,14 +19,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
     super.initState();
-    // 3秒後に説明を自動で非表示にする
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        setState(() {
-          _showInstructions = false;
-        });
-      }
-    });
+    // 説明は自動では消えない（ユーザーが×ボタンを押すまで表示）
   }
 
   @override
@@ -179,20 +172,7 @@ class _UserScreenState extends State<UserScreen> {
                 ),
               );
               
-              // 投稿完了後、説明を再表示
-              if (result == true) {
-                setState(() {
-                  _showInstructions = true;
-                });
-                // 3秒後に再び非表示
-                Future.delayed(const Duration(seconds: 3), () {
-                  if (mounted) {
-                    setState(() {
-                      _showInstructions = false;
-                    });
-                  }
-                });
-              }
+              // 投稿完了後は説明を再表示しない（ユーザーが×ボタンを押すまで表示）
             },
             backgroundColor: const Color(0xFF1976D2),
             child: const Icon(
